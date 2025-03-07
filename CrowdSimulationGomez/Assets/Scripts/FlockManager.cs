@@ -10,12 +10,17 @@ public class FlockManager : MonoBehaviour
     public int numFish = 20;
     public GameObject[] allFish;
     public Vector3 swimLimits = new Vector3(5, 5, 5);
+    public Vector3 goalPos = Vector3.zero;
 
     [Header("Fish Settings")]
     [Range(0.0f, 5.0f)]
     public float minSpeed;
     [Range(0.0f, 5.0f)]
     public float maxSpeed;
+    [Range(1.0f, 10.0f)]
+    public float neighbourDistance;
+    [Range(1.0f, 5.0f)]
+    public float rotationSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +33,15 @@ public class FlockManager : MonoBehaviour
             allFish[i] = Instantiate(fishPrefab, pos, Quaternion.identity);
         }
         FM = this;
+        goalPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Random.Range(0, 100) < 10)
+        {
+            goalPos = transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x), Random.Range(-swimLimits.y, swimLimits.y), Random.Range(-swimLimits.z, swimLimits.z));
+        }
     }
 }
